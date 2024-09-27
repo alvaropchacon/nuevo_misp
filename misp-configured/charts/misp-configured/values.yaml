@@ -1,0 +1,26 @@
+# Default values for nginx.
+# This is a YAML-formatted file.
+# Declare name/value pairs to be passed into your templates.
+
+replicaCount: 1
+restartPolicy: Never
+
+# Evaluated by the post-install hook
+sleepyTime: "10"
+
+image:
+  repository: harvarditsecurity/misp
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 8888
+  nodePort: 30010
+
+volumes:
+  mysqlPath: /opt/enisa/trainings-2019/analyst/misp/data/misp-configured/misp-configured-db
+  configPath: /opt/enisa/trainings-2019/analyst/misp/data/misp-configured/misp-configured-config
+  mispData: /tmp/data
+
+password: Str0ngP@sswd!

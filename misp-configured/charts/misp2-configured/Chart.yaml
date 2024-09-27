@@ -1,0 +1,9 @@
+name: misp2
+description: Bare MISP chart
+version: 0.1.0
+kubeVersion: ">=1.2.0"
+keywords:
+  - http
+home: https://github.com/MISP/MISP
+sources:
+  - https://hub.docker.com/_/harvarditsecurity/docker-misp

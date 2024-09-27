@@ -1,0 +1,13 @@
+name: misp-bare
+description: Not configured misp admin exercise chart
+version: 0.1.0
+kubeVersion: ">=1.2.0"
+keywords:
+  - malware
+  - http
+home: https://github.com/MISP/MISP
+sources:
+  - https://hub.docker.com/_/harvarditsecurity/docker-misp
+maintainers:
+  - name: Conrad Crampton
+

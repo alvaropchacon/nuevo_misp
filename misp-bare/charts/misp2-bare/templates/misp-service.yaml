@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/name: {{ template "misp.name" . }}
+    helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+  name: misp2-service
+spec:
+  type: "{{ .Values.service.type }}"
+  ports:
+    - name: https
+      port: {{ .Values.service.port }}
+      protocol: TCP
+      targetPort: https
+      {{- if (and (eq .Values.service.type "NodePort") (not (empty .Values.service.nodePort))) }}
+      nodePort: {{ .Values.service.nodePort }}
+      {{- end }}
+  selector:
+    app.kubernetes.io/name: {{ template "misp.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}

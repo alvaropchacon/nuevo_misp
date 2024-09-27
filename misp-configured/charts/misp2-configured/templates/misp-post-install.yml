@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ template "misp.fullname" . }}
+  labels:
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    app.kubernetes.io/name: {{ template "misp.name" . }}
+  annotations:
+    "helm.sh/hook": post-install
+spec:
+  template:
+    metadata:
+      name: {{ template "misp.fullname" . }}
+      labels:
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/name: {{ template "misp.name" . }}
+    spec:
+      restartPolicy: {{ .Values.restartPolicy }}
+      volumes:
+        - name: misp-data-volume
+          hostPath:
+            path: {{ .Values.volumes.mispData | quote }}
+          type: Directory
+      containers:
+        - name: post-install-job
+          image: "certpl2019/misp-uploader"
+          command: ["python", "/uploader/upload.py", "misp2-service:8888", "/data", {{ .Values.password | quote }}]
+          volumeMounts:
+            - mountPath: /data
+              name: misp-data-volume
+
